@@ -1,0 +1,15 @@
+.cells {
+	border: 1px solid black;
+	width: 30px;
+	height: 30px;
+	background: blue;
+	cursor: url('../../assets/output-onlinepngtools.png') 8 10, auto;
+}
+
+.cells:hover {
+	background-color: rgb(206, 18, 18);
+}
+
+.ship-cell {
+	background-color: chocolate;
+}

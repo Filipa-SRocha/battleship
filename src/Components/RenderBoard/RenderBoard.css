@@ -1,0 +1,12 @@
+.board {
+	margin: 20px auto;
+	background: green;
+	width: 70%;
+}
+
+.grid-container {
+	width: 100px;
+	display: grid;
+	grid-template-columns: repeat(10, 1fr);
+	grid-template-rows: repeat(10, 1fr);
+}
