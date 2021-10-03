@@ -1,23 +1,39 @@
 import Cell from '../Cell/Cell';
 import './RenderBoard.css';
+import { Game, GameContext } from '../../Game/Game';
+import { useContext } from 'react';
 
 function RenderBoard(props) {
 	//player board, array of objects-cells
 
+	let { turn } = useContext(GameContext);
 	let allCells = props.board;
+	let classes = 'board-area';
+
+	if (props.player === turn) {
+		classes = classes + ' my-turn';
+	}
 
 	return (
-		<>
-			<div className='board'>
-				<p>This is the board component talking as</p>
-
-				<div className='grid-container'>
-					{allCells.map(function (cell) {
-						return <Cell info={cell} key={cell.position}></Cell>;
-					})}
-				</div>
+		<div className={classes}>
+			<div className='letters'>
+				{['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map((char) => {
+					return <span className='char-cell'>{char}</span>;
+				})}
 			</div>
-		</>
+			<div className='numbers'>
+				{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {
+					return <span className='number-cell'>{n}</span>;
+				})}
+			</div>
+			<div className='grid-container'>
+				{allCells.map((cell) => {
+					return (
+						<Cell info={cell} key={cell.position} player={props.player}></Cell>
+					);
+				})}
+			</div>
+		</div>
 	);
 }
 

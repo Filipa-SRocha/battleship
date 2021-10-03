@@ -13,3 +13,12 @@
 .ship-cell {
 	background-color: chocolate;
 }
+
+.hit {
+	background-color: black;
+}
+
+.disabled {
+	pointer-events: none;
+	cursor: progress;
+}

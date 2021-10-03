@@ -1,19 +1,26 @@
 import './cell.css';
 import { useContext } from 'react';
-import { CellContext } from '../../Game';
+import { GameContext } from '../../Game/Game';
 
-function Cell({ info: { position, hasShip, beenHit } }) {
-	const handleClick = useContext(CellContext);
+function Cell({ info: { position, hasShip, beenHit }, player }) {
+	const { handleClick, turn } = useContext(GameContext);
+	let classes = 'cells';
+	let showBoats = player === 'player1' ? true : false;
 
-	if (hasShip) {
-		return (
-			<div className='cells ship-cell' onClick={() => handleClick(position)}>
-				<p>{position}</p>
-			</div>
-		);
+	if (turn === player) {
+		//classname para cells nao clicaveis
+		classes = classes + ' disabled';
 	}
+	if (hasShip && showBoats) {
+		classes += ' ship-cell';
+	}
+
+	if (beenHit) {
+		classes += ' hit';
+	}
+
 	return (
-		<div className='cells'>
+		<div className={classes} onClick={() => handleClick(position)}>
 			<p>{position}</p>
 		</div>
 	);
