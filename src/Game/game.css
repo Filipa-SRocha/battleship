@@ -1,5 +1,16 @@
+.game {
+	background: url(../assets/seaWaves.jpg);
+	background-size: contain;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+}
+
 .board-container {
-	background-color: aquamarine;
+	width: 85%;
+	height: 85%;
+	background-color: #82a0a1d2;
+	margin: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;

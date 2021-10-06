@@ -1,9 +1,10 @@
 import { Game } from './Game/Game';
+import GlobalStyle from './GlobalStyle';
 
 function App() {
 	return (
 		<div className='App'>
-			<p>We are live people!</p>
+			<GlobalStyle />
 			<Game></Game>
 		</div>
 	);

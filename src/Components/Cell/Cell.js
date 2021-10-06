@@ -16,14 +16,10 @@ function Cell({ info: { position, hasShip, beenHit }, player }) {
 	}
 
 	if (beenHit) {
-		classes += ' hit';
+		classes += hasShip ? ' boat-hit' : ' water';
 	}
 
-	return (
-		<div className={classes} onClick={() => handleClick(position)}>
-			<p>{position}</p>
-		</div>
-	);
+	return <div className={classes} onClick={() => handleClick(position)}></div>;
 }
 
 export default Cell;

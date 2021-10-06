@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import React from 'react';
 import RenderBoard from '../Components/RenderBoard/RenderBoard';
+import RenderShips from '../Components/RenderShips/RenderShips';
 import GameBoard from '../Factories/gameBoardFactory';
 import './game.css';
 
@@ -20,8 +21,15 @@ function Game() {
 	const [player1, setPlayer1] = useState(humanPlayer.board);
 	const [computerBoard, setComputerBoard] = useState(computer.board);
 	const [turn, setTurn] = useState('player1');
+	const [ships_player1, setShips_player1] = useState(myShips);
+	const [ships_player2, setShips_player2] = useState(computerShips);
 
-	const receiveAttack = (coordinates, attackedBoard, attackedPlayer) => {
+	const receiveAttack = (
+		coordinates,
+		attackedBoard,
+		attackedPlayer,
+		attackedShips
+	) => {
 		let attackedCell = attackedBoard.find(
 			(cell) => cell.position === coordinates
 		);
@@ -31,23 +39,19 @@ function Game() {
 		}
 
 		if (attackedCell.hasShip) {
-			let atackedShip = myShips.find(
-				(ship) => attackedCell.hasShip.name === ship.name
+			let wreck = attackedShips.find((ship) =>
+				ship.whereAmI.includes(attackedCell.index)
 			);
-			atackedShip.gotHit(attackedCell.position);
 		} else {
 			console.log('Water!');
 		}
 
-		let index = attackedBoard.findIndex(
-			(cell) => cell.position === coordinates
-		);
 		let newCell = attackedCell;
 		newCell.beenHit = true;
 
-		let newArray = attackedBoard.slice(0, index);
+		let newArray = attackedBoard.slice(0, attackedCell.index);
 		newArray.push(newCell);
-		let newState = newArray.concat(attackedBoard.slice(index + 1));
+		let newState = newArray.concat(attackedBoard.slice(attackedCell.index + 1));
 
 		attackedPlayer === 'player1'
 			? setPlayer1(newState)
@@ -58,6 +62,13 @@ function Game() {
 			return prevTurn === 'player1' ? 'player2' : 'player1';
 		});
 		console.log(turn);
+		checkVitory(attackedShips);
+	};
+
+	const checkVitory = (ships) => {
+		if (ships.every((ship) => ship.isSunk)) {
+			console.log('gameOver');
+		}
 	};
 
 	//places a boat based on the position of the first coordinate, the axis and the ship object
@@ -93,20 +104,22 @@ function Game() {
 	const handleClick = (position) => {
 		//gets the coordinate of the cell that was clicked
 		console.log(position);
-		let attacked = turn === 'player1' ? computerBoard : player1;
-		let player = turn === 'player1' ? 'computer' : 'player1';
 
-		receiveAttack(position, attacked, player);
+		turn === 'player1'
+			? receiveAttack(position, computerBoard, 'computer', ships_player2)
+			: receiveAttack(position, player1, 'player1', ships_player1);
 	};
-
 	const gameContextObject = { handleClick, turn };
 
 	return (
 		<GameContext.Provider value={gameContextObject}>
-			<div className='board-container'>
-				<RenderBoard board={player1} player={'player1'} />
-				<RenderBoard board={computerBoard} player={'player2'} />
-			</div>
+			<main className='game'>
+				<div className='board-container'>
+					<RenderShips ships={myShips} />
+					<RenderBoard board={player1} player={'player1'} />
+					<RenderBoard board={computerBoard} player={'player2'} />
+				</div>
+			</main>
 		</GameContext.Provider>
 	);
 }

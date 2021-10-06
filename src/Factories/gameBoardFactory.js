@@ -3,12 +3,14 @@ import Ships from './shipFactory';
 const GameBoard = () => {
 	//Makes the board:
 	let board = [];
+	let n = 0;
 	for (let a = 65; a <= 74; a++) {
-		for (let i = 1; i <= 10; i++) {
+		for (let i = 1; i <= 10; i++, n++) {
 			board.push({
 				position: `${String.fromCharCode(a)}-${i}`,
 				hasShip: false,
 				beenHit: false,
+				index: n,
 			});
 		}
 	}

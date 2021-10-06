@@ -15,8 +15,7 @@
 	display: grid;
 	grid-area: letters;
 	grid-template-columns: repeat(10, 1fr);
-	margin: -15px 20px;
-	background-color: blueviolet;
+	margin: -20px 20px;
 	text-align: center;
 }
 
@@ -24,21 +23,16 @@
 	width: 20px;
 	height: 330px;
 	display: grid;
+	text-align: end;
 	grid-area: numbers;
+	margin: 5px -10px;
 	grid-template-rows: repeat(10, 1fr);
-	background-color: blueviolet;
-}
-
-.char-cell {
-	border-right: 2px solid black;
-}
-.number-cell {
-	border-bottom: 2px solid black;
 }
 
 .board-area {
-	border: 1px solid yellow;
-	height: 400px;
+	margin: 20px;
+	width: 350px;
+	height: 350px;
 	display: grid;
 	grid-template-rows: 3fr 5fr;
 	grid-template-columns: 1fr 5fr;
@@ -48,5 +42,5 @@
 }
 
 .my-turn {
-	border: 5px solid green;
+	box-shadow: rgba(238, 0, 0, 0.56) 0px 0px 10px 4px;
 }
