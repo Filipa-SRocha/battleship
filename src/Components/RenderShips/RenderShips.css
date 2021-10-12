@@ -1,0 +1,28 @@
+.boat {
+	background: rgba(223, 221, 221, 0.692);
+	padding: 10px;
+}
+
+.boat-cells-container {
+	display: flex;
+	border: 1px solid grey;
+	width: fit-content;
+}
+
+.boat-cells {
+	width: 30px;
+	height: 30px;
+	margin: 1px;
+	border: 1px solid black;
+	background-color: rgb(97, 97, 97);
+}
+
+.dragged {
+	background-color: transparent;
+	border-color: rgb(180, 179, 179);
+}
+
+.dragged .boat-cells {
+	background-color: transparent;
+	border-color: rgb(180, 179, 179);
+}

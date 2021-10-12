@@ -18,18 +18,22 @@ function RenderBoard(props) {
 		<div className={classes}>
 			<div className='letters'>
 				{['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map((char) => {
-					return <span>{char}</span>;
+					return <span key={props.player + char}>{char}</span>;
 				})}
 			</div>
 			<div className='numbers'>
 				{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {
-					return <span>{n}</span>;
+					return <span key={props.player + n}>{n}</span>;
 				})}
 			</div>
 			<div className='grid-container'>
 				{allCells.map((cell) => {
 					return (
-						<Cell info={cell} key={cell.position} player={props.player}></Cell>
+						<Cell
+							info={cell}
+							key={props.player + cell.position}
+							player={props.player}
+						></Cell>
 					);
 				})}
 			</div>

@@ -6,6 +6,7 @@ import GameBoard from '../Factories/gameBoardFactory';
 import './game.css';
 
 import Player from '../Factories/playerFactory';
+import GameSetup from '../Components/GameSetup/GameSetup';
 
 const GameContext = React.createContext();
 
@@ -103,22 +104,25 @@ function Game() {
 
 	const handleClick = (position) => {
 		//gets the coordinate of the cell that was clicked
-		console.log(position);
-
 		turn === 'player1'
 			? receiveAttack(position, computerBoard, 'computer', ships_player2)
 			: receiveAttack(position, player1, 'player1', ships_player1);
 	};
 	const gameContextObject = { handleClick, turn };
+	let isGameSetupDone = true;
 
 	return (
 		<GameContext.Provider value={gameContextObject}>
 			<main className='game'>
-				<div className='board-container'>
-					<RenderShips ships={myShips} />
-					<RenderBoard board={player1} player={'player1'} />
-					<RenderBoard board={computerBoard} player={'player2'} />
-				</div>
+				{isGameSetupDone ? (
+					<GameSetup />
+				) : (
+					<div className='board-container'>
+						<RenderShips ships={myShips} />
+						<RenderBoard board={player1} player={'player1'} />
+						<RenderBoard board={computerBoard} player={'player2'} />
+					</div>
+				)}
 			</main>
 		</GameContext.Provider>
 	);
