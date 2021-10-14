@@ -3,10 +3,13 @@
 	width: 30px;
 	height: 30px;
 	background: #9ac0c1;
+}
+
+.on-play {
 	cursor: url('../../assets/output-onlinepngtools.png') 8 10, auto;
 }
 
-.cells:hover {
+.on-play :hover {
 	background-color: rgb(206, 18, 18);
 }
 
@@ -27,4 +30,9 @@
 .disabled {
 	pointer-events: none;
 	cursor: progress;
+}
+
+.placing-boat {
+	background-color: rgb(20, 57, 220);
+	cursor: grabbing;
 }

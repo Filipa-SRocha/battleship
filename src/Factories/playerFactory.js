@@ -1,22 +1,19 @@
-import GameBoard from './gameBoardFactory';
-import Ships from './shipFactory';
+import Gameboard from './gameBoardFactory';
 
-const Player = (name) => {
-	const makeRandomMove = (enemyBoard) => {
-		let availableCells = enemyBoard.reduce((cell) => {
-			return (cell.beenHit = false);
-		});
+const Player = (id, name) => {
+	const gameboard = Gameboard();
 
-		let randomMove = Math.floor(Math.random() * availableCells.length);
-		return enemyBoard[randomMove];
-	};
+	const myShips = gameboard.placeShips();
 
-	let myTurn = false;
+	// const makeRandomMove = (enemyBoard) => {
+	// 	let availableCells = enemyBoard.reduce((cell) => {
+	// 		return (cell.beenHit = false);
+	// 	});
 
-	const changeTurn = () => {
-		myTurn = !myTurn;
-	};
+	// 	let randomMove = Math.floor(Math.random() * availableCells.length);
+	// 	return enemyBoard[randomMove];
+	// };
 
-	return { name, makeRandomMove, changeTurn, myTurn };
+	return { id, name, gameboard, myShips };
 };
 export default Player;

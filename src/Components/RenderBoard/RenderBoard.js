@@ -3,14 +3,14 @@ import './RenderBoard.css';
 import { Game, GameContext } from '../../Game/Game';
 import { useContext } from 'react';
 
-function RenderBoard(props) {
+function RenderBoard({ player }) {
 	//player board, array of objects-cells
 
 	let { turn } = useContext(GameContext);
-	let allCells = props.board;
+	let allCells = player.gameboard.board;
 	let classes = 'board-area';
 
-	if (props.player === turn) {
+	if (player.id === turn) {
 		classes = classes + ' my-turn';
 	}
 
@@ -18,12 +18,12 @@ function RenderBoard(props) {
 		<div className={classes}>
 			<div className='letters'>
 				{['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map((char) => {
-					return <span key={props.player + char}>{char}</span>;
+					return <span key={player.id + char}>{char}</span>;
 				})}
 			</div>
 			<div className='numbers'>
 				{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {
-					return <span key={props.player + n}>{n}</span>;
+					return <span key={player.id + n}>{n}</span>;
 				})}
 			</div>
 			<div className='grid-container'>
@@ -31,8 +31,8 @@ function RenderBoard(props) {
 					return (
 						<Cell
 							info={cell}
-							key={props.player + cell.position}
-							player={props.player}
+							key={player.id + cell.position}
+							player={player}
 						></Cell>
 					);
 				})}
