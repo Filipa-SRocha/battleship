@@ -15,20 +15,6 @@ const GameBoard = () => {
 		}
 	}
 
-	// const place = (ship, head, axis) => {
-	// 	for (let i = 0; i < ship.length; i++) {
-	// 		//if x axis, mark the following cells, if y axis mark the cells bellow
-	// 		axis === 'x'
-	// 			? ship.whereAmI.push(head + i)
-	// 			: ship.whereAmI.push(head + i * 10);
-	// 	}
-
-	// 	ship.whereAmI.forEach((cell) => {
-	// 		board[cell].hasShip = ship;
-	// 	});
-	// 	return ship;
-	// };
-
 	const placeShips = () => {
 		const placedShips = Ships();
 		// const headCells = [1, 3, 7, 71, 91];

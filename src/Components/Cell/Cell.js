@@ -2,14 +2,7 @@ import './cell.css';
 import { useContext } from 'react';
 import { GameContext } from '../../Game/Game';
 
-function Cell({
-	info: { index, position, hasShip, beenHit },
-	player,
-	onMouseEnter,
-	onMouseLeave,
-	onClick,
-	hover,
-}) {
+function Cell({ info: { index, position, hasShip, beenHit }, player, setup }) {
 	const { handleClick, turn, isSetupDone } = useContext(GameContext);
 
 	let classes = 'cells';
@@ -18,7 +11,7 @@ function Cell({
 	if (turn === player) {
 		//classname para cells nao clicaveis
 		classes = classes + ' disabled';
-	} else {
+	} else if (isSetupDone) {
 		classes = classes + ' on-play';
 	}
 
@@ -31,21 +24,7 @@ function Cell({
 		console.log('hiittteed cell');
 	}
 
-	if (hover) {
-		classes += ' placing-boat';
-	}
-
-	return isSetupDone ? (
-		<div className={classes} onClick={() => handleClick(position)}></div>
-	) : (
-		<div
-			className={classes}
-			id={index}
-			onMouseEnter={(e) => onMouseEnter(e, index)}
-			onMouseLeave={() => onMouseLeave()}
-			onClick={() => onClick()}
-		></div>
-	);
+	return <div className={classes} onClick={() => handleClick(position)}></div>;
 }
 
 export default Cell;

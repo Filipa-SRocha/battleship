@@ -6,7 +6,7 @@ import './game.css';
 import reducer from './reducer';
 
 import Player from '../Factories/playerFactory';
-import GameSetup from '../Components/GameSetup/GameSetup';
+import { GameSetup } from '../Components/GameSetup/GameSetup';
 
 const GameContext = React.createContext();
 
@@ -116,7 +116,7 @@ function Game() {
 					{isGameSetupDone ? (
 						<>
 							<RenderBoard player={players.player1} />
-							<RenderBoard player={players.player1} />
+							<RenderBoard player={players.player2} />
 						</>
 					) : (
 						<GameSetup player={players.player1} />

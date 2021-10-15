@@ -1,6 +1,6 @@
-import Cell from '../Cell/Cell';
+import '../Cell/cell.css';
 import '../RenderBoard/RenderBoard.css';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { GameContext } from '../../Game/Game';
 
 const GameSetup = ({ player }) => {
@@ -12,21 +12,47 @@ const GameSetup = ({ player }) => {
 	const [hovering, setHovering] = useState([]);
 	const temp = player.myShips[0];
 	const [ship, setShip] = useState(temp);
+	const [axis, setAxis] = useState('x');
 
-	const handleMouseEnter = (e, index) => {
+	const handleMouseEnter = (e) => {
+		let index = Number(e.target.id);
+
+		let n;
+		axis === 'x' ? (n = 1) : (n = 10);
+
+		let maxIndex;
+
+		axis === 'x'
+			? (maxIndex = limitPosition(index) - ship.length + 1)
+			: (maxIndex = limitPosition(index) - (ship.length - 1) * 10);
+
 		let placingArray = [];
+		let boatHead;
+
+		index <= maxIndex ? (boatHead = index) : (boatHead = maxIndex);
+
 		for (let i = 0; i < ship.length; i++) {
-			placingArray.push(index + i);
+			placingArray.push(boatHead + i * n);
 		}
+
 		setHovering(() => placingArray);
 	};
+
+	useEffect(() => {
+		document.getElementById('set-up-grid').focus();
+	});
 
 	const handleMouseLeave = () => {
 		setHovering(() => []);
 	};
 
-	const handleClick = () => {
-		//new state boat
+	const handleKeyDown = (e) => {
+		if (e.code === 'Space') {
+			setAxis((prevState) => (prevState === 'x' ? 'y' : 'x'));
+		}
+	};
+	const handleSetupClick = () => {
+		//new state (boat)
 		let newShips = [];
 		let updatedShip = {};
 		player.myShips.forEach((myShip) => {
@@ -40,7 +66,7 @@ const GameSetup = ({ player }) => {
 			}
 		});
 
-		//new state board
+		//new state (board)
 		let newBoard = [];
 		player.gameboard.board.forEach((cell) => {
 			let newCell = { ...cell };
@@ -65,22 +91,49 @@ const GameSetup = ({ player }) => {
 		}
 	};
 
+	const limitPosition = (index_start) => {
+		let max;
+		if (axis === 'x') {
+			max =
+				String(index_start).length >= 2 ? String(index_start)[0] + '9' : '9';
+		} else {
+			max =
+				String(index_start).length >= 2
+					? '9' + String(index_start)[1]
+					: '9' + String(index_start)[0];
+		}
+
+		return Number(max);
+	};
+
+	let classes = 'cells';
+
 	return (
 		<>
 			<h2>Please place your ships wisely!</h2>
 
-			<div className='grid-container'>
+			<div
+				className='grid-container'
+				id='set-up-grid'
+				onKeyDown={handleKeyDown}
+				tabIndex={0}
+			>
 				{allCells.map((cell) => {
+					classes = ' cells';
+					cell.hasShip ? (classes += ' ship-cell') : (classes = classes);
+					hovering.includes(cell.index)
+						? (classes += ' placing-boat')
+						: (classes = classes);
+
 					return (
-						<Cell
-							info={cell}
-							key={player.id + cell.position}
-							player={player}
-							onMouseEnter={handleMouseEnter}
-							onMouseLeave={handleMouseLeave}
-							onClick={handleClick}
-							hover={hovering.includes(cell.index)}
-						></Cell>
+						<div
+							className={classes}
+							key={cell.index + 'setup'}
+							id={cell.index}
+							onMouseEnter={(e) => handleMouseEnter(e)}
+							onMouseLeave={() => handleMouseLeave()}
+							onClick={() => handleSetupClick()}
+						></div>
 					);
 				})}
 			</div>
@@ -88,4 +141,4 @@ const GameSetup = ({ player }) => {
 	);
 };
 
-export default GameSetup;
+export { GameSetup };
