@@ -2,8 +2,14 @@ import '../Cell/cell.css';
 import '../RenderBoard/RenderBoard.css';
 import { useState, useContext, useEffect } from 'react';
 import { GameContext } from '../../Game/Game';
+import {
+	limitPosition,
+	getReservedCells,
+	randomPlacement,
+} from '../../helpers/shipPlacement';
 
-const GameSetup = ({ player }) => {
+const GameSetup = ({ players }) => {
+	let player = players.player1;
 	let allCells = player.gameboard.board;
 
 	const { dispatch, setIsGameSetupDone } = useContext(GameContext);
@@ -14,6 +20,24 @@ const GameSetup = ({ player }) => {
 	const [ship, setShip] = useState(temp);
 	const [axis, setAxis] = useState('x');
 
+	//setting player2-computer-board----move this function later++++
+	async function setPlayer2() {
+		console.log('going');
+		for (let thisShip of players.player2.myShips) {
+			let temp = randomPlacement(thisShip, players.player2);
+			let shipOn = temp[0];
+			let myAxis = temp[1];
+
+			let reserved = getReservedCells(shipOn.fullShip, myAxis);
+
+			await dispatch({
+				type: 'PLACE_BOAT',
+				payload: [players.player2, thisShip, shipOn.fullShip, reserved],
+			});
+			console.log('turn over');
+		}
+	}
+
 	const handleMouseEnter = (e) => {
 		let index = Number(e.target.id);
 
@@ -23,8 +47,8 @@ const GameSetup = ({ player }) => {
 		let maxIndex;
 
 		axis === 'x'
-			? (maxIndex = limitPosition(index) - ship.length + 1)
-			: (maxIndex = limitPosition(index) - (ship.length - 1) * 10);
+			? (maxIndex = limitPosition(index, axis) - ship.length + 1)
+			: (maxIndex = limitPosition(index, axis) - (ship.length - 1) * 10);
 
 		let placingArray = [];
 		let boatHead;
@@ -51,32 +75,13 @@ const GameSetup = ({ player }) => {
 			setAxis((prevState) => (prevState === 'x' ? 'y' : 'x'));
 		}
 	};
+
 	const handleSetupClick = () => {
-		//new state (boat)
-		let newShips = [];
-		let updatedShip = {};
-		player.myShips.forEach((myShip) => {
-			let newShip = { ...myShip };
-			if (myShip === ship) {
-				newShip.whereAmI = hovering;
-				updatedShip = { ...newShip };
-				newShips.push(newShip);
-			} else {
-				newShips.push(myShip);
-			}
+		let reserved = getReservedCells(hovering, axis);
+		dispatch({
+			type: 'PLACE_BOAT',
+			payload: [player, ship, hovering, reserved],
 		});
-
-		//new state (board)
-		let newBoard = [];
-		player.gameboard.board.forEach((cell) => {
-			let newCell = { ...cell };
-			if (hovering.includes(cell.index)) {
-				newCell.hasShip = updatedShip;
-			}
-			newBoard.push(newCell);
-		});
-
-		dispatch({ type: 'PLACE_BOAT', payload: [newBoard, newShips] });
 
 		checkPlacement();
 	};
@@ -87,23 +92,9 @@ const GameSetup = ({ player }) => {
 		if (nextShip) {
 			setShip(() => nextShip);
 		} else {
+			setPlayer2();
 			setIsGameSetupDone(() => true);
 		}
-	};
-
-	const limitPosition = (index_start) => {
-		let max;
-		if (axis === 'x') {
-			max =
-				String(index_start).length >= 2 ? String(index_start)[0] + '9' : '9';
-		} else {
-			max =
-				String(index_start).length >= 2
-					? '9' + String(index_start)[1]
-					: '9' + String(index_start)[0];
-		}
-
-		return Number(max);
 	};
 
 	let classes = 'cells';
@@ -124,7 +115,7 @@ const GameSetup = ({ player }) => {
 					hovering.includes(cell.index)
 						? (classes += ' placing-boat')
 						: (classes = classes);
-
+					cell.reserved ? (classes += ' reserved-cell') : (classes = classes);
 					return (
 						<div
 							className={classes}

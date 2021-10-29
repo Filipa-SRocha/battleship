@@ -36,3 +36,7 @@
 	background-color: rgb(20, 57, 220);
 	cursor: grabbing;
 }
+
+.reserved-cell {
+	background-color: rgb(75, 34, 224);
+}

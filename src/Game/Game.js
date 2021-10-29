@@ -57,41 +57,6 @@ function Game() {
 		// 	checkVitory(attackedShips);
 		// };
 	};
-	// const checkVitory = (ships) => {
-	// 	if (ships.every((ship) => ship.isSunk)) {
-	// 		console.log('gameOver');
-	// 	}
-	// };
-
-	// //places a boat based on the position of the first coordinate, the axis and the ship object
-	// // const place = (axis, headPosition, ship) => {
-	// // 	console.log('inside place');
-	// // 	let headCell = 1; //findCellIndex(headPosition);
-	// // 	let changingCells = [];
-
-	// // 	for (let i = 0; i < player1.ships[2].length; i++) {
-	// // 		//if x axis, mark the following cells, if y axis mark the cells bellow
-	// // 		axis === 'x'
-	// // 			? changingCells.push(headCell + i)
-	// // 			: changingCells.push(headCell + i * 10);
-	// // 	}
-	// // };
-
-	// // place('x', 1);
-
-	// // function findCellIndex(coordinates, board) {
-	// // 	console.log('wee');
-	// // 	console.log('inside cell index');
-	// // 	let cellIndex = board.findIndex((cell) => cell.position === coordinates);
-
-	// // 	if (cellIndex < 0) {
-	// // 		console.log("cell index error, couldn't find a cell for that coordinate");
-	// // 	}
-	// // 	console.log(cellIndex);
-	// // 	return cellIndex;
-	// // }
-
-	// // findCellIndex
 
 	const handleClick = (position) => {
 		console.log(turn);
@@ -119,7 +84,7 @@ function Game() {
 							<RenderBoard player={players.player2} />
 						</>
 					) : (
-						<GameSetup player={players.player1} />
+						<GameSetup players={players} />
 					)}
 				</div>
 			</main>
