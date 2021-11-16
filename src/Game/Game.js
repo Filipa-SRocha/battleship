@@ -1,6 +1,8 @@
 import { useState, useReducer } from 'react';
 import React from 'react';
 import RenderBoard from '../Components/RenderBoard/RenderBoard';
+import GameOver from '../Components/GameOver/GameOver';
+import NewGame from '../Views/StartGame/StartGame';
 
 import './game.css';
 import reducer from './reducer';
@@ -18,6 +20,8 @@ function Game() {
 	//states
 	const [turn, setTurn] = useState('player1');
 	const [isGameSetupDone, setIsGameSetupDone] = useState(false);
+	const [gameMode, setGameMode] = useState(false);
+	const [isGameOver, setIsGameOver] = useState(false);
 
 	const [players, dispatch] = useReducer(reducer, {
 		player1: player1,
@@ -35,31 +39,32 @@ function Game() {
 			let wreck = attackedPlayer.myShips.find((ship) =>
 				ship.whereAmI.includes(attackedCell.index)
 			);
+			wreck.gotHit(attackedCell.index);
 		} else {
 			console.log('Water!');
 		}
 
-		let newCell = { ...attackedCell };
-		newCell.beenHit = true;
-
-		let newArray = attackedPlayer.gameboard.board.slice(0, attackedCell.index);
-		newArray.push(newCell);
-		let newBoard = newArray.concat(
-			attackedPlayer.gameboard.board.slice(attackedCell.index + 1)
-		);
-
-		dispatch({ type: 'NEW_HIT', payload: [newBoard, attackedPlayer.id] });
+		dispatch({ type: 'NEW_HIT', payload: [attackedPlayer, attackedCell] });
 
 		setTurn((prevTurn) => {
-			console.log('chnging Turns');
 			return prevTurn === 'player1' ? 'player2' : 'player1';
 		});
-		// 	checkVitory(attackedShips);
-		// };
+
+		let victory = checkVictory(attackedPlayer.myShips);
+		console.log(victory);
+		if (victory) {
+			endGame();
+		}
 	};
 
+	const endGame = () => {
+		setIsGameOver(() => true);
+		console.log(`${turn} won!!! ---------------------`);
+	};
+
+	const checkVictory = (atkShips) => atkShips.every((ship) => ship.isSunk());
+
 	const handleClick = (position) => {
-		console.log(turn);
 		//gets the coordinate of the cell that was clicked
 		turn === 'player1'
 			? receiveAttack(position, players.player2)
@@ -69,22 +74,36 @@ function Game() {
 	const gameContextObject = {
 		handleClick,
 		turn,
+		setGameMode,
 		isGameSetupDone,
 		setIsGameSetupDone,
 		dispatch,
+		gameMode,
 	};
 
 	return (
 		<GameContext.Provider value={gameContextObject}>
 			<main className='game'>
 				<div className='board-container'>
-					{isGameSetupDone ? (
-						<>
-							<RenderBoard player={players.player1} />
-							<RenderBoard player={players.player2} />
-						</>
+					{!gameMode ? (
+						<NewGame />
 					) : (
-						<GameSetup players={players} />
+						<>
+							{isGameOver ? (
+								<GameOver winner={players.player1.id} />
+							) : (
+								<>
+									{isGameSetupDone ? (
+										<>
+											<RenderBoard player={players.player1} />
+											<RenderBoard player={players.player2} />
+										</>
+									) : (
+										<GameSetup players={players} />
+									)}
+								</>
+							)}
+						</>
 					)}
 				</div>
 			</main>

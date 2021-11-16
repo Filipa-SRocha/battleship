@@ -1,10 +1,25 @@
 export default function reducer(state, action) {
 	if (action.type === 'NEW_HIT') {
-		const newBoard = action.payload[0];
-		const player = action.payload[1];
+		const player = action.payload[0];
+		const cell = action.payload[1];
+
+		// board state
+		let newCell = { ...cell };
+		newCell.beenHit = true;
+
+		let newArray = player.gameboard.board.slice(0, cell.index);
+		newArray.push(newCell);
+		let newBoard = newArray.concat(
+			player.gameboard.board.slice(cell.index + 1)
+		);
+
+		//ships state
+		let newShips = [];
+		player.myShips.forEach((ship) => newShips.push({ ...ship }));
 
 		const newState = { ...state };
-		state[`${player}`].gameboard.board = newBoard;
+		newState[`${player.id}`].gameboard.board = newBoard;
+		newState[`${player.id}`].myShips = newShips;
 
 		return newState;
 	}
@@ -31,7 +46,6 @@ export default function reducer(state, action) {
 
 		//new state (board)
 		let newBoard = [];
-		console.log('updated ship', updatedShip);
 		player.gameboard.board.forEach((cell) => {
 			let newCell = { ...cell };
 			if (shipLocation.includes(cell.index)) {
@@ -43,10 +57,8 @@ export default function reducer(state, action) {
 		});
 
 		const newState = { ...state };
-		console.log(player.id);
 		newState[`${player.id}`].gameboard.board = newBoard;
 		newState[`${player.id}`].myShips = newShips;
-		console.log(newState);
 		return newState;
 	}
 }

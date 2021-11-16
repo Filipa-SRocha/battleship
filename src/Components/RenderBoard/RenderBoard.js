@@ -1,7 +1,7 @@
 import Cell from '../Cell/Cell';
 import './RenderBoard.css';
 import { Game, GameContext } from '../../Game/Game';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 function RenderBoard({ player }) {
 	//player board, array of objects-cells

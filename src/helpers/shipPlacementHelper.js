@@ -1,17 +1,27 @@
 import GameBoard from '../Factories/gameBoardFactory';
 
-const limitPosition = (index_start, axis) => {
+//retuns the last Cell of a row or column
+function _lastCell(index, axis) {
 	let max;
 	if (axis === 'x') {
-		max = String(index_start).length >= 2 ? String(index_start)[0] + '9' : '9';
+		max = String(index).length >= 2 ? String(index)[0] + '9' : '9';
 	} else {
 		max =
-			String(index_start).length >= 2
-				? '9' + String(index_start)[1]
-				: '9' + String(index_start)[0];
+			String(index).length >= 2
+				? '9' + String(index)[1]
+				: '9' + String(index)[0];
 	}
 
 	return Number(max);
+}
+
+const limitPosition = (index, axis, shipLength) => {
+	let maxIndex;
+	axis === 'x'
+		? (maxIndex = _lastCell(index, axis) - shipLength + 1)
+		: (maxIndex = _lastCell(index, axis) - (shipLength - 1) * 10);
+
+	return maxIndex;
 };
 
 //returns true if the cell is a wall
@@ -151,7 +161,7 @@ const randomPlacement = (ship, player) => {
 	);
 
 	let axis = getRandom(0, 2) === 0 ? 'x' : 'y';
-	console.log(availableCells);
+
 	let possiblePlays = getAvailablePlacements(ship.length, availableCells, axis);
 
 	let headCell = possiblePlays[getRandom(0, possiblePlays.length)];
