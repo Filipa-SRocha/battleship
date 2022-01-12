@@ -42,5 +42,11 @@
 }
 
 .light-up {
-	background-color: aqua;
+	animation: color-run 900ms 1;
+}
+
+@keyframes color-run {
+	0% {
+		background-color: #3c4a4b;
+	}
 }

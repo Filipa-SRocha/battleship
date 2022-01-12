@@ -1,32 +1,12 @@
-import { useState, useReducer } from 'react';
-import React from 'react';
+import React, { useContext } from 'react';
 import RenderBoard from '../Components/RenderBoard/RenderBoard';
-import GameOver from '../Components/GameOver/GameOver';
-import NewGame from '../Views/StartGame/StartGame';
+
+import { GameContext } from '../Views/NewGame/NewGame';
 
 import './game.css';
-import reducer from './reducer';
 
-import Player from '../Factories/playerFactory';
-import { GameSetup } from '../Components/GameSetup/GameSetup';
-
-const GameContext = React.createContext();
-
-function Game() {
-	//Create Players
-	const player1 = Player('player1', 'human');
-	const player2 = Player('player2', 'computer');
-
-	//states
-	const [turn, setTurn] = useState('player1');
-	const [isGameSetupDone, setIsGameSetupDone] = useState(false);
-	const [gameMode, setGameMode] = useState(false);
-	const [isGameOver, setIsGameOver] = useState(false);
-
-	const [players, dispatch] = useReducer(reducer, {
-		player1: player1,
-		player2: player2,
-	});
+function Game({ players }) {
+	const { dispatch, setIsGameOver, turn, setTurn } = useContext(GameContext);
 
 	const receiveAttack = (coordinates, attackedPlayer) => {
 		let attackedCell = attackedPlayer.gameboard.board.find(
@@ -71,44 +51,12 @@ function Game() {
 			: receiveAttack(position, players.player1);
 	};
 
-	const gameContextObject = {
-		handleClick,
-		turn,
-		setGameMode,
-		isGameSetupDone,
-		setIsGameSetupDone,
-		dispatch,
-		gameMode,
-	};
-
 	return (
-		<GameContext.Provider value={gameContextObject}>
-			<main className='game'>
-				<div className='board-container'>
-					{!gameMode ? (
-						<NewGame />
-					) : (
-						<>
-							{isGameOver ? (
-								<GameOver winner={players.player1.id} />
-							) : (
-								<>
-									{isGameSetupDone ? (
-										<>
-											<RenderBoard player={players.player1} />
-											<RenderBoard player={players.player2} />
-										</>
-									) : (
-										<GameSetup players={players} />
-									)}
-								</>
-							)}
-						</>
-					)}
-				</div>
-			</main>
-		</GameContext.Provider>
+		<>
+			<RenderBoard player={players.player1} handleClick={handleClick} />
+			<RenderBoard player={players.player2} handleClick={handleClick} />
+		</>
 	);
 }
 
-export { Game, GameContext };
+export { Game };

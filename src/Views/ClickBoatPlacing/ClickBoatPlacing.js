@@ -5,9 +5,9 @@ import {
 	limitPosition,
 	getReservedCells,
 } from '../../helpers/shipPlacementHelper';
-import { GameContext } from '../../Game/Game';
+import { GameContext } from '../NewGame/NewGame';
 
-const ClickBoatPlacing = ({ player }) => {
+const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 	const { dispatch, setIsGameSetupDone } = useContext(GameContext);
 
 	const [hovering, setHovering] = useState([]);
@@ -78,7 +78,8 @@ const ClickBoatPlacing = ({ player }) => {
 		if (nextShip) {
 			setShip(() => nextShip);
 		} else {
-			setIsGameSetupDone(() => true);
+			playerSetupDone(() => true);
+			//setIsGameSetupDone(() => true);
 		}
 	};
 

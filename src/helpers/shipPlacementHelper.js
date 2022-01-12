@@ -138,7 +138,7 @@ function getAvailablePlacements(shipLength, availableCells, axis) {
 			}
 		}
 	}
-
+	console.log('-----headcellllllllss----', headCells);
 	return headCells;
 }
 

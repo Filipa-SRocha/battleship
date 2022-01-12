@@ -1,9 +1,9 @@
 import Cell from '../Cell/Cell';
 import './RenderBoard.css';
-import { Game, GameContext } from '../../Game/Game';
-import { useContext, useEffect } from 'react';
+import { GameContext } from '../../Views/NewGame/NewGame';
+import { useContext } from 'react';
 
-function RenderBoard({ player }) {
+function RenderBoard({ player, handleClick }) {
 	//player board, array of objects-cells
 
 	let { turn } = useContext(GameContext);
@@ -16,6 +16,7 @@ function RenderBoard({ player }) {
 
 	return (
 		<div className={classes}>
+			<h1>{player.id}</h1>
 			<div className='letters'>
 				{['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map((char) => {
 					return <span key={player.id + char}>{char}</span>;
@@ -33,6 +34,7 @@ function RenderBoard({ player }) {
 							info={cell}
 							key={player.id + cell.position}
 							player={player}
+							handleClick={handleClick}
 						></Cell>
 					);
 				})}
