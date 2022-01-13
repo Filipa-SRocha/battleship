@@ -1,4 +1,4 @@
-import Cell from '../Cell/Cell';
+import Cell from '../Cell/index';
 import './RenderBoard.css';
 import { GameContext } from '../../Views/NewGame/NewGame';
 import { useContext } from 'react';

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import waves from './assets/seaWaves.jpg';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -70,6 +71,13 @@ select {
 
 
 //------------------//
+
+body{
+  background-image: url(${waves});
+  background-size: contain;
+  /* display: flex;
+  justify-content: center; */
+}
 
 
 `;

@@ -1,4 +1,4 @@
-import '../../Components/Cell/Cell';
+import '../../Components/Cell';
 import '../../Components/RenderBoard/RenderBoard';
 import { useState, useContext, useEffect } from 'react';
 import {
