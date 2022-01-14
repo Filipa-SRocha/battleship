@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import RenderBoard from '../../Components/RenderBoard/RenderBoard';
+import RenderBoard from '../../Components/RenderBoard/index';
 import { useContext } from 'react';
-import { GameContext } from '../NewGame/NewGame';
+import { GameContext } from '../NewGame/index';
 import {
 	randomPlacement,
 	getReservedCells,

@@ -1,4 +1,6 @@
-#modal-container {
+import styled from 'styled-components';
+
+export const ModalContainer = styled.div`
 	height: 40%;
 	width: 40%;
 	background-color: rgba(105, 2, 2, 0.466);
@@ -8,12 +10,12 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-}
 
-p {
-	font-size: 2em;
-}
+	p {
+		font-size: 2em;
+	}
 
-.title {
-	font-size: 3em;
-}
+	h2 {
+		font-size: 3em;
+	}
+`;

@@ -1,14 +1,20 @@
 import '../../Components/Cell';
-import '../../Components/RenderBoard/RenderBoard';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import {
 	limitPosition,
 	getReservedCells,
 } from '../../helpers/shipPlacementHelper';
-import { GameContext } from '../NewGame/NewGame';
+import { GameContext } from '../NewGame/index';
+import {
+	Board,
+	GridContainer,
+	GridHorizontalLetters,
+	GridVerticalNumbers,
+} from '../../Components/BoardComponents';
+import { PlacingCell } from '../../Components/Cell';
 
 const ClickBoatPlacing = ({ player, playerSetupDone }) => {
-	const { dispatch, setIsGameSetupDone } = useContext(GameContext);
+	const { dispatch } = useContext(GameContext);
 
 	const [hovering, setHovering] = useState([]);
 	const [ship, setShip] = useState(player.myShips[0]);
@@ -37,7 +43,6 @@ const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 		let availableIndexes = player.gameboard
 			.availableCellsForShips(player.gameboard.board)
 			.map((cell) => cell.index);
-		console.log(availableIndexes);
 
 		placingArray.forEach((cellIndex) => {
 			if (!availableIndexes.includes(cellIndex)) {
@@ -50,11 +55,16 @@ const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 
 	const handleMouseLeave = () => {
 		setHovering(() => []);
+		console.log('Hovering', hovering);
 	};
 
+	// to focus on the grid after rendering
+	const setUpGrid = useRef(null);
 	useEffect(() => {
-		document.getElementById('set-up-grid').focus();
-	});
+		if (setUpGrid.current) {
+			setUpGrid.current.focus();
+		}
+	}, [setUpGrid]);
 
 	const handleKeyDown = (e) => {
 		if (e.code === 'Space') {
@@ -64,6 +74,7 @@ const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 
 	const handleSetupClick = () => {
 		let reserved = getReservedCells(hovering, axis);
+
 		dispatch({
 			type: 'PLACE_BOAT',
 			payload: [player, ship, hovering, reserved],
@@ -79,44 +90,38 @@ const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 			setShip(() => nextShip);
 		} else {
 			playerSetupDone(() => true);
-			//setIsGameSetupDone(() => true);
 		}
 	};
 
-	let classes;
+	let hovered;
 
 	return (
-		<>
+		<Board>
 			<h2>Please place your ships wisely!</h2>
 
-			<div
+			<GridHorizontalLetters player={player} />
+			<GridVerticalNumbers player={player} />
+			<GridContainer
 				className='grid-container'
-				id='set-up-grid'
+				ref={setUpGrid}
 				onKeyDown={handleKeyDown}
 				tabIndex={0}
 			>
 				{allCells.map((cell) => {
-					classes = ' cells';
-					cell.hasShip
-						? (classes += ' ship-cell unclickable')
-						: (classes = classes);
-					hovering.includes(cell.index)
-						? (classes += ' placing-boat')
-						: (classes = classes);
-					cell.reserved ? (classes += ' reserved-cell') : (classes = classes);
+					hovered = hovering.includes(cell.index);
 					return (
-						<div
-							className={classes}
+						<PlacingCell
+							info={cell}
 							key={cell.index + 'setup'}
-							id={cell.index}
-							onMouseEnter={(e) => handleMouseEnter(e)}
-							onMouseLeave={() => handleMouseLeave()}
-							onClick={() => handleSetupClick()}
-						></div>
+							hovered={hovered}
+							handleMouseLeave={handleMouseLeave}
+							handleMouseEnter={handleMouseEnter}
+							handleSetupClick={handleSetupClick}
+						></PlacingCell>
 					);
 				})}
-			</div>
-		</>
+			</GridContainer>
+		</Board>
 	);
 };
 

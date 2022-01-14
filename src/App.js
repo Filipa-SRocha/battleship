@@ -1,4 +1,4 @@
-import { NewGame } from './Views/NewGame/NewGame';
+import { NewGame } from './Views/NewGame/index';
 import GlobalStyle from './GlobalStyle';
 
 function App() {

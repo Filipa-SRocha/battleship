@@ -1,7 +1,12 @@
-import Cell from '../Cell/index';
-import './RenderBoard.css';
-import { GameContext } from '../../Views/NewGame/NewGame';
+import { Cell } from '../Cell/index';
+import { GameContext } from '../../Views/NewGame/index';
 import { useContext } from 'react';
+import {
+	Board,
+	GridContainer,
+	GridHorizontalLetters,
+	GridVerticalNumbers,
+} from '../BoardComponents';
 
 function RenderBoard({ player, handleClick }) {
 	//player board, array of objects-cells
@@ -15,19 +20,13 @@ function RenderBoard({ player, handleClick }) {
 	}
 
 	return (
-		<div className={classes}>
+		<Board>
 			<h1>{player.id}</h1>
-			<div className='letters'>
-				{['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map((char) => {
-					return <span key={player.id + char}>{char}</span>;
-				})}
-			</div>
-			<div className='numbers'>
-				{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {
-					return <span key={player.id + n}>{n}</span>;
-				})}
-			</div>
-			<div className='grid-container'>
+
+			<GridHorizontalLetters player={player} />
+			<GridVerticalNumbers player={player} />
+
+			<GridContainer>
 				{allCells.map((cell) => {
 					return (
 						<Cell
@@ -38,8 +37,8 @@ function RenderBoard({ player, handleClick }) {
 						></Cell>
 					);
 				})}
-			</div>
-		</div>
+			</GridContainer>
+		</Board>
 	);
 }
 

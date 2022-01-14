@@ -1,25 +1,24 @@
-import './PlayButton.css';
-import { GameContext } from '../../Views/NewGame/NewGame';
+import { GameContext } from '../../Views/NewGame/index';
 import { useContext } from 'react';
+import { StyledButton } from './style';
 
 function PlayButton(props) {
 	let { text, id } = props;
-	let classes;
+	let disabledButton = false;
 	let { setGameMode, gameMode } = useContext(GameContext);
 
 	if (props.disable) {
-		classes = 'disabled';
+		disabledButton = true;
 	}
 
 	function handleClick(e) {
 		setGameMode(() => e.target.id);
-		console.log(gameMode);
 	}
 
 	return (
-		<button className={classes} id={id} onClick={handleClick}>
+		<StyledButton disabledButton={disabledButton} id={id} onClick={handleClick}>
 			{text}
-		</button>
+		</StyledButton>
 	);
 }
 

@@ -1,7 +1,7 @@
 import '../Cell/cell.css';
-import '../RenderBoard/RenderBoard.css';
+
 import { useState, useContext } from 'react';
-import { GameContext } from '../../Views/NewGame/NewGame';
+import { GameContext } from '../../Views/NewGame/index';
 
 import ClickBoatPlacing from '../../Views/ClickBoatPlacing/ClickBoatPlacing';
 import RandomBoatPlacement from '../../Views/RandomBoatPlacing/RandomBoatPlacement';

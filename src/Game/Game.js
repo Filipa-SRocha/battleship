@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
-import RenderBoard from '../Components/RenderBoard/RenderBoard';
+import GameOver from '../Components/GameOver/index';
+import RenderBoard from '../Components/RenderBoard/index';
 
-import { GameContext } from '../Views/NewGame/NewGame';
-
-import './game.css';
+import { GameContext } from '../Views/NewGame/index';
 
 function Game({ players }) {
 	const { dispatch, setIsGameOver, turn, setTurn } = useContext(GameContext);
@@ -55,6 +54,7 @@ function Game({ players }) {
 		<>
 			<RenderBoard player={players.player1} handleClick={handleClick} />
 			<RenderBoard player={players.player2} handleClick={handleClick} />
+			<GameOver></GameOver>
 		</>
 	);
 }

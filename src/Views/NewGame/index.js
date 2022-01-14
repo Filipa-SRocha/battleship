@@ -1,5 +1,5 @@
-import PlayButton from '../../Components/PlayButton/PlayButton';
-import './NewGame.css';
+import PlayButton from '../../Components/PlayButton/index';
+import { StyledContainer, StyledButtonsContainer } from './style';
 import Player from '../../Factories/playerFactory';
 import { useState, useReducer } from 'react';
 import reducer from './reducer';
@@ -42,18 +42,18 @@ function NewGame() {
 				<GameSetup players={players} />
 			) : (
 				<body>
-					<div className='new-game-container'>
+					<StyledContainer>
 						<h1>BATTLESHIP - THE GAME</h1>
 
 						<p>Please Select Game Mode:</p>
 
-						<div id='buttons-container'>
+						<StyledButtonsContainer>
 							{/* The playbutton component sets a game Mode */}
 							<PlayButton text='1 Player (easy mode)' id='easy-mode' />
 							<PlayButton text='1 Player (hard mode)' id='hard-mode' disable />
 							<PlayButton text='2 Players' id='two-players' />
-						</div>
-					</div>
+						</StyledButtonsContainer>
+					</StyledContainer>
 				</body>
 			)}
 		</GameContext.Provider>
