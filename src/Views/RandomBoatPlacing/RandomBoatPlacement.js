@@ -8,16 +8,6 @@ import {
 } from '../../helpers/shipPlacementHelper';
 
 function RandomBoatPlacement({ player, playerSetupDone }) {
-	// animation
-	useEffect(() => {
-		let delay = 200;
-		document.querySelectorAll('.cells').forEach((cell) => {
-			cell.classList.add('light-up');
-			cell.style.animationDelay = `${delay}ms`;
-			delay += 60;
-		});
-	});
-
 	useEffect(() => {
 		shipRandomPlacement({ player });
 	}, []);
@@ -40,7 +30,7 @@ function RandomBoatPlacement({ player, playerSetupDone }) {
 
 	setTimeout(() => {
 		playerSetupDone(() => true);
-	}, 8000);
+	}, 4000);
 
 	return <RenderBoard player={player} />;
 }

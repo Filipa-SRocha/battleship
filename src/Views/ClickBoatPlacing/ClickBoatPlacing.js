@@ -1,5 +1,5 @@
 import '../../Components/Cell';
-import { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useContext } from 'react';
 import {
 	limitPosition,
 	getReservedCells,
@@ -12,6 +12,12 @@ import {
 	GridVerticalNumbers,
 } from '../../Components/BoardComponents';
 import { PlacingCell } from '../../Components/Cell';
+import {
+	StyledContainer,
+	Pannels,
+	BoatsContainer,
+	InstructionsContainer,
+} from './style.js';
 
 const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 	const { dispatch } = useContext(GameContext);
@@ -53,18 +59,7 @@ const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 		canBePlaced ? setHovering(() => placingArray) : setHovering(() => []);
 	};
 
-	const handleMouseLeave = () => {
-		setHovering(() => []);
-		console.log('Hovering', hovering);
-	};
-
-	// to focus on the grid after rendering
-	const setUpGrid = useRef(null);
-	useEffect(() => {
-		if (setUpGrid.current) {
-			setUpGrid.current.focus();
-		}
-	}, [setUpGrid]);
+	const handleMouseLeave = () => setHovering(() => []);
 
 	const handleKeyDown = (e) => {
 		if (e.code === 'Space') {
@@ -93,35 +88,45 @@ const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 		}
 	};
 
-	let hovered;
-
 	return (
-		<Board>
+		<StyledContainer>
 			<h2>Please place your ships wisely!</h2>
-
-			<GridHorizontalLetters player={player} />
-			<GridVerticalNumbers player={player} />
-			<GridContainer
-				className='grid-container'
-				ref={setUpGrid}
-				onKeyDown={handleKeyDown}
-				tabIndex={0}
-			>
-				{allCells.map((cell) => {
-					hovered = hovering.includes(cell.index);
-					return (
-						<PlacingCell
-							info={cell}
-							key={cell.index + 'setup'}
-							hovered={hovered}
-							handleMouseLeave={handleMouseLeave}
-							handleMouseEnter={handleMouseEnter}
-							handleSetupClick={handleSetupClick}
-						></PlacingCell>
-					);
-				})}
-			</GridContainer>
-		</Board>
+			<Pannels>
+				<BoatsContainer>
+					<h3>Boats</h3>
+				</BoatsContainer>
+				<Board>
+					<GridHorizontalLetters player={player} />
+					<GridVerticalNumbers player={player} />
+					<GridContainer handleKeyDown={handleKeyDown}>
+						{allCells.map((cell) => {
+							let hovered = hovering.includes(cell.index);
+							return (
+								<PlacingCell
+									info={cell}
+									key={cell.index + 'setup'}
+									hovered={hovered}
+									handleMouseLeave={handleMouseLeave}
+									handleMouseEnter={handleMouseEnter}
+									handleSetupClick={handleSetupClick}
+								></PlacingCell>
+							);
+						})}
+					</GridContainer>
+				</Board>
+				<InstructionsContainer>
+					<h3>Instructions</h3>
+					<p>
+						Para mudar a direcção do barco (horizontal/vertical) carregue na
+						tecla de espaço
+					</p>
+					<p>
+						Por favor coloque o mouse em cima do tabuleiro do jogo e clique para
+						posicionar o seu barco
+					</p>
+				</InstructionsContainer>
+			</Pannels>
+		</StyledContainer>
 	);
 };
 

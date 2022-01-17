@@ -1,4 +1,3 @@
-import './cell.css';
 import { useContext } from 'react';
 import { GameContext } from '../../Views/NewGame/index';
 import { CellContainer, PlacingCellContainer } from './style';

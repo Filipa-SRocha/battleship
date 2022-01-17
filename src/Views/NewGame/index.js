@@ -45,13 +45,12 @@ function NewGame() {
 					<StyledContainer>
 						<h1>BATTLESHIP - THE GAME</h1>
 
-						<p>Please Select Game Mode:</p>
-
 						<StyledButtonsContainer>
+							<p>Please Select Game Mode:</p>
 							{/* The playbutton component sets a game Mode */}
 							<PlayButton text='1 Player (easy mode)' id='easy-mode' />
 							<PlayButton text='1 Player (hard mode)' id='hard-mode' disable />
-							<PlayButton text='2 Players' id='two-players' />
+							<PlayButton text='2 Players' id='two-players' disable />
 						</StyledButtonsContainer>
 					</StyledContainer>
 				</body>

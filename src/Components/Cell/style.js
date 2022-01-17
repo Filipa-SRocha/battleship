@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import boatImg from '../../assets/barco.svg';
 import wavesImg from '../../assets/whiteWaves.svg';
 
@@ -45,3 +45,13 @@ export const PlacingCellContainer = styled(BasicCellContainer)`
 	pointer-events: ${(props) => (props.unclickable ? 'none' : 'inherit')};
 	cursor: ${(props) => (props.unclickable ? 'progress' : 'inherit')};
 `;
+
+const colorRun = keyframes`
+	0% {
+		background-color: #3c4a4b;
+	}
+`;
+
+// .light-up {
+// 	animation: color-run 900ms 1;
+// }

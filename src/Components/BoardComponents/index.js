@@ -5,6 +5,8 @@ import {
 	StyledNumbers,
 } from './style';
 
+import { useRef, useEffect } from 'react';
+
 function Board({ children }) {
 	return <StyledBoard>{children}</StyledBoard>;
 }
@@ -29,7 +31,24 @@ function GridVerticalNumbers(player) {
 	);
 }
 
-function GridContainer({ children }) {
-	return <StyledGridContainer> {children}</StyledGridContainer>;
+function GridContainer({ children, handleKeyDown }) {
+	console.log('inside grid container');
+	// to focus on the grid after rendering
+	const setUpGrid = useRef(null);
+	useEffect(() => {
+		if (setUpGrid.current) {
+			setUpGrid.current.focus();
+		}
+	}, [setUpGrid]);
+
+	return (
+		<StyledGridContainer
+			ref={setUpGrid}
+			onKeyDown={(e) => handleKeyDown(e)}
+			tabIndex={0}
+		>
+			{children}
+		</StyledGridContainer>
+	);
 }
 export { Board, GridHorizontalLetters, GridVerticalNumbers, GridContainer };

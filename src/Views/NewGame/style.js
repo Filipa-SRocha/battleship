@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-	width: 100%;
-	height: 100%;
+	width: 100%auto;
+	height: 80vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -12,4 +12,7 @@ export const StyledContainer = styled.div`
 export const StyledButtonsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	p {
+		margin: 20px;
+	}
 `;

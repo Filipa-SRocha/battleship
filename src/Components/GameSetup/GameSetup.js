@@ -1,5 +1,3 @@
-import '../Cell/cell.css';
-
 import { useState, useContext } from 'react';
 import { GameContext } from '../../Views/NewGame/index';
 

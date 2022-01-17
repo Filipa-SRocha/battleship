@@ -75,8 +75,13 @@ select {
 body{
   background-image: url(${waves});
   background-size: contain;
-  /* display: flex;
-  justify-content: center; */
+  height:100vh;
+  
+}
+
+#root{
+  width: 100%;
+  height:100vh;
 }
 
 
