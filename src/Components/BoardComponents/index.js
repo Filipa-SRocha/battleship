@@ -3,36 +3,44 @@ import {
 	StyledGridContainer,
 	StyledLetters,
 	StyledNumbers,
+	StyledDiv,
 } from './style';
 
 import { useRef, useEffect } from 'react';
 
-function Board({ children }) {
-	return <StyledBoard>{children}</StyledBoard>;
+function Board({ children, size }) {
+	return <StyledBoard size={size}>{children}</StyledBoard>;
 }
 
-function GridHorizontalLetters({ player }) {
+function GridHorizontalLetters({ player, size }) {
 	return (
-		<StyledLetters>
+		<StyledLetters size={size}>
 			{['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map((char) => {
-				return <span key={player.id + char}>{char}</span>;
+				return (
+					<StyledDiv key={player.id + char} size={size}>
+						{char}
+					</StyledDiv>
+				);
 			})}
 		</StyledLetters>
 	);
 }
 
-function GridVerticalNumbers(player) {
+function GridVerticalNumbers({ player, size }) {
 	return (
-		<StyledNumbers>
+		<StyledNumbers size={size}>
 			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {
-				return <span key={player.id + n}>{n}</span>;
+				return (
+					<StyledDiv key={player.id + n} size={size}>
+						{n}
+					</StyledDiv>
+				);
 			})}
 		</StyledNumbers>
 	);
 }
 
-function GridContainer({ children, handleKeyDown }) {
-	console.log('inside grid container');
+function GridContainer({ children, handleKeyDown, size }) {
 	// to focus on the grid after rendering
 	const setUpGrid = useRef(null);
 	useEffect(() => {
@@ -43,6 +51,7 @@ function GridContainer({ children, handleKeyDown }) {
 
 	return (
 		<StyledGridContainer
+			size={size}
 			ref={setUpGrid}
 			onKeyDown={(e) => handleKeyDown(e)}
 			tabIndex={0}

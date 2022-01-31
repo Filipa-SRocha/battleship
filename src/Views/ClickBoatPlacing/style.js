@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
 	margin: auto;
-
 	width: 100%;
 	background-color: rgb(89, 135, 171, 0.7);
 	height: 80vh;
@@ -16,14 +15,16 @@ export const StyledContainer = styled.div`
 `;
 
 export const Pannels = styled.div`
+	height: 80%;
 	display: flex;
+	align-items: baseline;
 	justify-content: space-around;
 `;
 
-const InfoContainer = styled.div`
+export const InstructionsContainer = styled.div`
 	/* background-color: rgb(50, 75, 94, 0.8); */
-	width: 35%;
-	height: 100%;
+	width: 45%;
+	height: fit-content;
 	padding: 0 2%;
 	h3 {
 		text-align: center;
@@ -33,7 +34,3 @@ const InfoContainer = styled.div`
 		margin-bottom: 10px;
 	}
 `;
-
-export const BoatsContainer = styled(InfoContainer)``;
-
-export const InstructionsContainer = styled(InfoContainer)``;

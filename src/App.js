@@ -1,10 +1,11 @@
 import { NewGame } from './Views/NewGame/index';
+import { StyledApp } from './AppStyle';
 
 function App() {
 	return (
-		<div className='App'>
+		<StyledApp className='App'>
 			<NewGame></NewGame>
-		</div>
+		</StyledApp>
 	);
 }
 

@@ -3,9 +3,16 @@ import GameOver from '../Components/GameOver/index';
 import RenderBoard from '../Components/RenderBoard/index';
 
 import { GameContext } from '../Views/NewGame/index';
+import {
+	EasyModeContainer,
+	StyledContainer,
+	HumanPlayerBoard,
+	ComputerBoard,
+} from './style';
 
 function Game({ players }) {
-	const { dispatch, setIsGameOver, turn, setTurn } = useContext(GameContext);
+	const { dispatch, setIsGameOver, turn, setTurn, gameMode } =
+		useContext(GameContext);
 
 	const receiveAttack = (coordinates, attackedPlayer) => {
 		let attackedCell = attackedPlayer.gameboard.board.find(
@@ -30,7 +37,7 @@ function Game({ players }) {
 		});
 
 		let victory = checkVictory(attackedPlayer.myShips);
-		console.log(victory);
+
 		if (victory) {
 			endGame();
 		}
@@ -51,11 +58,27 @@ function Game({ players }) {
 	};
 
 	return (
-		<>
-			<RenderBoard player={players.player1} handleClick={handleClick} />
-			<RenderBoard player={players.player2} handleClick={handleClick} />
+		<StyledContainer>
+			{/* {gameMode == "easy-mode"? } */}
+			<EasyModeContainer>
+				<HumanPlayerBoard>
+					<p>Your Board</p>
+					<RenderBoard
+						player={players.player1}
+						handleClick={handleClick}
+						size='small'
+					/>
+				</HumanPlayerBoard>
+				<ComputerBoard>
+					<RenderBoard
+						player={players.player2}
+						handleClick={handleClick}
+						size='big'
+					/>
+				</ComputerBoard>
+			</EasyModeContainer>
 			<GameOver></GameOver>
-		</>
+		</StyledContainer>
 	);
 }
 

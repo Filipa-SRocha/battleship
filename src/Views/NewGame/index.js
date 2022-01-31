@@ -41,7 +41,7 @@ function NewGame() {
 			{gameMode ? (
 				<GameSetup players={players} />
 			) : (
-				<body>
+				<>
 					<StyledContainer>
 						<h1>BATTLESHIP - THE GAME</h1>
 
@@ -53,7 +53,7 @@ function NewGame() {
 							<PlayButton text='2 Players' id='two-players' disable />
 						</StyledButtonsContainer>
 					</StyledContainer>
-				</body>
+				</>
 			)}
 		</GameContext.Provider>
 	);

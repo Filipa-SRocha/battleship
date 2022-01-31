@@ -12,12 +12,7 @@ import {
 	GridVerticalNumbers,
 } from '../../Components/BoardComponents';
 import { PlacingCell } from '../../Components/Cell';
-import {
-	StyledContainer,
-	Pannels,
-	BoatsContainer,
-	InstructionsContainer,
-} from './style.js';
+import { StyledContainer, Pannels, InstructionsContainer } from './style.js';
 
 const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 	const { dispatch } = useContext(GameContext);
@@ -92,13 +87,10 @@ const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 		<StyledContainer>
 			<h2>Please place your ships wisely!</h2>
 			<Pannels>
-				<BoatsContainer>
-					<h3>Boats</h3>
-				</BoatsContainer>
 				<Board>
-					<GridHorizontalLetters player={player} />
-					<GridVerticalNumbers player={player} />
-					<GridContainer handleKeyDown={handleKeyDown}>
+					<GridHorizontalLetters player={player} size='big' />
+					<GridVerticalNumbers player={player} size='big' />
+					<GridContainer handleKeyDown={handleKeyDown} size='big'>
 						{allCells.map((cell) => {
 							let hovered = hovering.includes(cell.index);
 							return (
@@ -109,6 +101,7 @@ const ClickBoatPlacing = ({ player, playerSetupDone }) => {
 									handleMouseLeave={handleMouseLeave}
 									handleMouseEnter={handleMouseEnter}
 									handleSetupClick={handleSetupClick}
+									size='big'
 								></PlacingCell>
 							);
 						})}

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import RenderBoard from '../../Components/RenderBoard/index';
 import { useContext } from 'react';
 import { GameContext } from '../NewGame/index';
 import {
 	randomPlacement,
 	getReservedCells,
 } from '../../helpers/shipPlacementHelper';
+import Loading from '../../Components/Loading/index';
 
 function RandomBoatPlacement({ player, playerSetupDone }) {
 	useEffect(() => {
@@ -32,7 +32,11 @@ function RandomBoatPlacement({ player, playerSetupDone }) {
 		playerSetupDone(() => true);
 	}, 4000);
 
-	return <RenderBoard player={player} />;
+	return (
+		<>
+			<Loading />
+		</>
+	);
 }
 
 export default RandomBoatPlacement;

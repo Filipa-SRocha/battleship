@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import boatImg from '../../assets/barco.svg';
 import wavesImg from '../../assets/whiteWaves.svg';
 
@@ -26,9 +26,11 @@ function handleBackgroundColor(props) {
 
 const BasicCellContainer = styled.div`
 	border: 1px solid black;
-	width: 30px;
-	height: 30px;
+	/* width: 30px; */
+	width: ${(props) => (props.size === 'big' ? '30px' : '20px')};
+	height: ${(props) => (props.size === 'big' ? '30px' : '20px')};
 	background: #9ac0c1;
+	pointer-events: ${(props) => (props.size === 'big' ? 'auto' : 'none')};
 `;
 
 export const CellContainer = styled(BasicCellContainer)`
@@ -45,13 +47,3 @@ export const PlacingCellContainer = styled(BasicCellContainer)`
 	pointer-events: ${(props) => (props.unclickable ? 'none' : 'inherit')};
 	cursor: ${(props) => (props.unclickable ? 'progress' : 'inherit')};
 `;
-
-const colorRun = keyframes`
-	0% {
-		background-color: #3c4a4b;
-	}
-`;
-
-// .light-up {
-// 	animation: color-run 900ms 1;
-// }

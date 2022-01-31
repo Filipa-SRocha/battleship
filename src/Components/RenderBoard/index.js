@@ -8,25 +8,19 @@ import {
 	GridVerticalNumbers,
 } from '../BoardComponents';
 
-function RenderBoard({ player, handleClick }) {
+function RenderBoard({ player, handleClick, size }) {
 	//player board, array of objects-cells
 
 	let { turn } = useContext(GameContext);
 	let allCells = player.gameboard.board;
-	let classes = 'board-area';
-
-	if (player.id === turn) {
-		classes = classes + ' my-turn';
-	}
+	// let size = 'small';
 
 	return (
-		<Board>
-			<h1>{player.id}</h1>
+		<Board size={size}>
+			<GridHorizontalLetters player={player} size={size} />
+			<GridVerticalNumbers player={player} size={size} />
 
-			<GridHorizontalLetters player={player} />
-			<GridVerticalNumbers player={player} />
-
-			<GridContainer>
+			<GridContainer size={size}>
 				{allCells.map((cell) => {
 					return (
 						<Cell
@@ -34,6 +28,7 @@ function RenderBoard({ player, handleClick }) {
 							key={player.id + cell.position}
 							player={player}
 							handleClick={handleClick}
+							size={size}
 						></Cell>
 					);
 				})}

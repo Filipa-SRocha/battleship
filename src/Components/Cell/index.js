@@ -6,6 +6,7 @@ function Cell({
 	info: { index, position, hasShip, beenHit },
 	player,
 	handleClick,
+	size,
 }) {
 	const { isSetupDone, turn } = useContext(GameContext);
 
@@ -19,6 +20,7 @@ function Cell({
 			water={beenHit && !hasShip}
 			boatGotHit={beenHit && hasShip}
 			onClick={() => handleClick(position)}
+			size={size}
 		></CellContainer>
 	);
 }
@@ -29,6 +31,7 @@ function PlacingCell({
 	handleMouseEnter,
 	handleMouseLeave,
 	handleSetupClick,
+	size,
 }) {
 	return (
 		<PlacingCellContainer
@@ -40,6 +43,7 @@ function PlacingCell({
 			unclickable={hasShip}
 			hovered={hovered}
 			reserved={reserved}
+			size={size}
 		></PlacingCellContainer>
 	);
 }

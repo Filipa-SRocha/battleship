@@ -5,7 +5,7 @@ import { StyledButton } from './style';
 function PlayButton(props) {
 	let { text, id } = props;
 	let disabledButton = false;
-	let { setGameMode, gameMode } = useContext(GameContext);
+	let { setGameMode } = useContext(GameContext);
 
 	if (props.disable) {
 		disabledButton = true;

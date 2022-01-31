@@ -12,7 +12,6 @@ const Ship = (name, length) => {
 	let hits = [];
 
 	const gotHit = (position) => {
-		console.log('got callleeeed');
 		hits.push(position);
 	};
 
