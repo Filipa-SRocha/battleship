@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import boatImg from '../../assets/barco.svg';
 import wavesImg from '../../assets/whiteWaves.svg';
+import target from '../../assets/target_icon.cur';
 
 function handleBackGroungImg(props) {
 	if (props.boatGotHit) {
@@ -26,7 +27,6 @@ function handleBackgroundColor(props) {
 
 const BasicCellContainer = styled.div`
 	border: 1px solid black;
-	/* width: 30px; */
 	width: ${(props) => (props.size === 'big' ? '30px' : '20px')};
 	height: ${(props) => (props.size === 'big' ? '30px' : '20px')};
 	background: #9ac0c1;
@@ -34,10 +34,6 @@ const BasicCellContainer = styled.div`
 `;
 
 export const CellContainer = styled(BasicCellContainer)`
-	cursor: ${(props) =>
-		props.showGame
-			? "url('../../assets/output-onlinepngtools.png') 8 10, auto"
-			: 'pointer'};
 	background-color: ${(props) => (props.shipCell ? 'chocolate' : '#9ac0c1')};
 	background-image: ${(props) => handleBackGroungImg(props)};
 `;
