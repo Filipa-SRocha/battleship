@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import GameOver from '../Components/GameOver/index';
 import RenderBoard from '../Components/RenderBoard/index';
 
@@ -9,6 +9,7 @@ import {
 	HumanPlayerBoard,
 	ComputerBoard,
 } from './style';
+import { makeRandomMove } from '../helpers/smartAttack';
 
 function Game({ players }) {
 	const { dispatch, setIsGameOver, turn, setTurn, gameMode } =
@@ -56,6 +57,15 @@ function Game({ players }) {
 			? receiveAttack(position, players.player2)
 			: receiveAttack(position, players.player1);
 	};
+
+	useEffect(() => {
+		if (turn == 'player2') {
+			//returns the cell to be attacked
+			let move = makeRandomMove(players.player1.gameboard);
+
+			receiveAttack(move.position, players.player1);
+		}
+	});
 
 	return (
 		<StyledContainer>

@@ -13,7 +13,6 @@ function RenderBoard({ player, handleClick, size }) {
 
 	let { turn } = useContext(GameContext);
 	let allCells = player.gameboard.board;
-	// let size = 'small';
 
 	return (
 		<Board size={size}>
